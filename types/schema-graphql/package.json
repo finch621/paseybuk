@@ -9,6 +9,6 @@
   "typings": "./src/index.d.ts",
   "scripts": {
     "link:server": "ts-node src/lib/link-schema-to-server.ts",
-    "generate:typings": "ts-node ./src/lib/generate-typings.ts"
+    "generate:typings": "ts-node src/lib/generate-typings.ts"
   }
 }

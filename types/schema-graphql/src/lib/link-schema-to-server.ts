@@ -4,7 +4,7 @@ import { join } from 'path';
 const schemaFileName = 'schema.graphql';
 const serverProjectRoot = join(process.cwd(), '../../apps/server/src');
 const serverSchemaLinkPath = `${serverProjectRoot}/${schemaFileName}`;
-const schemaPath = join(process.cwd(), `./src/${schemaFileName}`);
+const schemaPath = join(process.cwd(), `/src/${schemaFileName}`);
 
 if (!readFileSync(serverSchemaLinkPath)) {
   symlink(schemaPath, serverSchemaLinkPath, 'file', (err) => {

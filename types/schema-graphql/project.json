@@ -4,10 +4,17 @@
   "sourceRoot": "types/schema-graphql/src",
   "projectType": "library",
   "targets": {
-    "generate:typings": {
+    "codegen": {
       "executor": "nx:run-script",
+      "dependsOn": ["link"],
       "options": {
         "script": "generate:typings"
+      }
+    },
+    "link": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "link:server"
       }
     },
     "build": {

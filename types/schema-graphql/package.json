@@ -8,6 +8,7 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "scripts": {
-    "generate:typings": "ts-node ./src/lib/generate-typings.ts && ts-node ./src/lib/link-schema-to-server.ts"
+    "link:server": "ts-node src/lib/link-schema-to-server.ts",
+    "generate:typings": "ts-node ./src/lib/generate-typings.ts"
   }
 }

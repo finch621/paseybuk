@@ -6,7 +6,6 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-console.log(process.cwd());
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({

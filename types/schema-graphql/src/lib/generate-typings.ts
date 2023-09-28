@@ -2,7 +2,7 @@ import { GenerateOptions, GraphQLDefinitionsFactory } from '@nestjs/graphql';
 import { join } from 'path';
 
 const options: GenerateOptions = {
-  typePaths: ['./schema.graphql'],
+  typePaths: [join(process.cwd(), 'src/schema.graphql')],
   path: join(process.cwd(), 'src/lib/schema.graphql.ts'),
   outputAs: 'class',
   watch: true,

@@ -1,18 +1,19 @@
-import { readFileSync, symlink } from 'fs';
-import { join } from 'path';
+import { existsSync, symlink } from 'fs';
+import { resolve } from 'path';
 
-const schemaFileName = 'schema.graphql';
-const serverProjectRoot = join(process.cwd(), '../../apps/server/src');
-const serverSchemaLinkPath = `${serverProjectRoot}/${schemaFileName}`;
-const schemaPath = join(process.cwd(), `/src/${schemaFileName}`);
+const fileName = 'schema.graphql';
+const schemaPath = resolve(`src/${fileName}`);
+const schemaLinkPath = resolve(`../../apps/server/src/${fileName}`);
 
-if (!readFileSync(serverSchemaLinkPath)) {
-  symlink(schemaPath, serverSchemaLinkPath, 'file', (err) => {
+if (!existsSync(schemaLinkPath)) {
+  symlink(schemaPath, schemaLinkPath, (err: unknown) => {
     if (err) {
       console.error(err);
       process.exit(1);
     } else {
-      console.info(`Schema file linked to ${serverSchemaLinkPath}`);
+      console.info(
+        `Schema file from ${schemaPath} linked to ${schemaLinkPath}`
+      );
     }
   });
 } else {

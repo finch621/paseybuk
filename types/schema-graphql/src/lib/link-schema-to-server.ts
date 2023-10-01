@@ -12,10 +12,10 @@ if (!existsSync(schemaLinkPath)) {
       process.exit(1);
     } else {
       console.info(
-        `Schema file from ${schemaPath} linked to ${schemaLinkPath}`
+        `${fileName} in ${schemaPath} succesfully symlinked to ${schemaLinkPath}`
       );
     }
   });
 } else {
-  console.info(`Link already existed`);
+  console.info(`Symlink already existed`);
 }

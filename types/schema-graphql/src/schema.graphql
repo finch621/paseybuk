@@ -4,5 +4,11 @@ type Query {
 
 type User {
   id: Int!
-  email: String!
+  email: String
+  password: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
 }
+
+scalar DateTime

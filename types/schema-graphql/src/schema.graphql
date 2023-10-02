@@ -2,13 +2,27 @@ type Query {
   user(id: String!): User!
 }
 
+type Mutation {
+  createUser(createUserDto: CreateUserDto!): User
+  login(email: String!, password: String!): AuthPayload
+}
+
+input CreateUserDto {
+  email: String!
+  password: String!
+}
+
 type User {
-  id: Int!
+  id: String!
   email: String
-  password: String
   createdAt: DateTime
   updatedAt: DateTime
   deletedAt: DateTime
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 scalar DateTime

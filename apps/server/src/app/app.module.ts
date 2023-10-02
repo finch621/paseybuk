@@ -5,6 +5,8 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from '../users/users.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 const buildSchemaPath = './dist/apps/server/schema.graphql';
 
@@ -16,6 +18,8 @@ const buildSchemaPath = './dist/apps/server/schema.graphql';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       typePaths: [buildSchemaPath],
     }),
+    PrismaModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

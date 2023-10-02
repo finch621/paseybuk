@@ -6,13 +6,15 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+const buildSchemaPath = './dist/apps/server/schema.graphql';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
-      typePaths: ['./schema.graphql'],
+      typePaths: [buildSchemaPath],
     }),
   ],
   controllers: [AppController],

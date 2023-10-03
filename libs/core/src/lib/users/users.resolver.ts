@@ -1,8 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CreateUserDto } from '@paseybuk/types/schema-graphql';
 import { User } from '@prisma/client';
-import { UsePipes } from '@nestjs/common';
-import { HashPipe } from '@paseybuk/core';
+import { HashPipe } from '../hash.pipe';
 
 import { UsersService } from './users.service';
 
@@ -10,9 +9,10 @@ import { UsersService } from './users.service';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @UsePipes(HashPipe)
   @Mutation()
-  async createUser(@Args('createUserDto') data: CreateUserDto): Promise<User> {
+  async createUser(
+    @Args('createUserDto', HashPipe) data: CreateUserDto
+  ): Promise<User> {
     return this.usersService.create(data);
   }
 }

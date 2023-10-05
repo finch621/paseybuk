@@ -1,7 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Context, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthPayload } from '@paseybuk/types/schema-graphql';
-import { User } from '@prisma/client';
 import { LocalAuthGuard } from '../local-auth.guard';
 import { AuthService } from './auth.service';
 
@@ -11,7 +10,7 @@ export class AuthResolver {
 
   @UseGuards(LocalAuthGuard)
   @Mutation(() => AuthPayload)
-  async login(@Context('user') user: User) {
-    return this.authService.signTokenAsync(user);
+  async login(@Context() context: any) {
+    return this.authService.signTokenAsync(context.req.user);
   }
 }

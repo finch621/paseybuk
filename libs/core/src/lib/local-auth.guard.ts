@@ -1,28 +1,18 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { AuthService } from './auth';
+import { AuthGuard } from '@nestjs/passport';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class LocalAuthGuard implements CanActivate {
-  constructor(private readonly authService: AuthService) {}
-
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+export class LocalAuthGuard extends AuthGuard('local') {
+  override getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
-    const { email, password } = ctx.getArgs();
-
-    const existingUser = await this.authService.validateUser(email, password);
-
-    if (!existingUser) {
-      throw new UnauthorizedException();
+    const gqlReq = ctx.getContext().req;
+    if (gqlReq) {
+      gqlReq.body = ctx.getArgs();
+      return gqlReq;
     }
 
-    ctx.getContext().user = existingUser;
-
-    return true;
+    return context.switchToHttp().getRequest();
   }
 }

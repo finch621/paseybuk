@@ -1,15 +1,17 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { Context, Mutation, Resolver } from '@nestjs/graphql';
+import { AuthPayload } from '@paseybuk/types/schema-graphql';
+import { User } from '@prisma/client';
+import { LocalAuthGuard } from '../local-auth.guard';
 import { AuthService } from './auth.service';
 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation()
-  async login(
-    @Args('email') email: string,
-    @Args('password') password: string
-  ) {
-    return this.authService.login(email, password);
+  @UseGuards(LocalAuthGuard)
+  @Mutation(() => AuthPayload)
+  async login(@Context('user') user: User) {
+    return this.authService.signTokenAsync(user);
   }
 }

@@ -1,8 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AuthPayload } from '@paseybuk/types/schema-graphql';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -24,16 +25,23 @@ export class AuthService {
     return null;
   }
 
-  async login(email: string, password: string): Promise<AuthPayload> {
+  async login(email: string, password: string): Promise<AuthPayload | null> {
     const existingUser = await this.validateUser(email, password);
 
     if (existingUser) {
-      return {
-        token: await this.jwtService.signAsync({ sub: existingUser.id, email }),
-        user: existingUser,
-      };
+      return this.signTokenAsync(existingUser);
     }
 
-    throw new UnauthorizedException();
+    return null;
+  }
+
+  async signTokenAsync(user: User) {
+    return {
+      token: await this.jwtService.signAsync({
+        sub: user.id,
+        email: user.email,
+      }),
+      user: { ...user, password: null },
+    };
   }
 }

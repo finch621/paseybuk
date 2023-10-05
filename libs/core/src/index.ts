@@ -3,3 +3,4 @@ export * from './lib/users';
 export * from './lib/prisma';
 export { HashPipe } from './lib/hash.pipe';
 export { LocalAuthGuard } from './lib/local-auth.guard';
+export { JwtGuard } from './lib/jwt.guard';
